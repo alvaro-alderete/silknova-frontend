@@ -9,7 +9,7 @@ function ProductCard({ producto }) {
 
   return (
     <Card className="h-100 border-0 shadow-sm">
-      <div style={{ position: "relative" }}> {/* relative needed for absolute children */}
+      <div style={{ position: "relative" }}>
         <Card.Img
           variant="top"
           src={producto.imagenes?.[0]}
