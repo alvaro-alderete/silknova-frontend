@@ -4,6 +4,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import api from "../config/axios.js";
 import ProductCard from "./ProductCard.jsx";
+import "./ProductGrid.css";
 
 function ProductGrid() {
   const [productos, setProductos] = useState([]);
@@ -28,7 +29,7 @@ function ProductGrid() {
   }, [paginaActual]);
 
   if (loading) return (
-    <section className="py-5" style={{ background: "#fafafa" }}>
+    <section className="py-5 product-grid">
       <Container>
         <Row xs={2} md={3} lg={5} className="g-3">
           {Array.from({ length: 15 }).map((_, i) => (
@@ -44,12 +45,12 @@ function ProductGrid() {
   );
 
   return (
-    <section className="py-5" style={{ background: "#fafafa" }}>
+    <section className="py-5 product-grid">
       <Container>
-        <h2 className="text-center mb-1" style={{ fontFamily: "Georgia, serif", letterSpacing: 3 }}>
+        <h2 className="text-center mb-1 product-grid__title">
           Colección
         </h2>
-        <p className="text-center text-muted mb-5" style={{ fontSize: 13, letterSpacing: 2 }}>
+        <p className="text-center text-muted mb-5 product-grid__subtitle">
           Piezas seleccionadas para cada ocasión
         </p>
 

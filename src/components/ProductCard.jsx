@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./ProductCard.css";
 import { Card, Button, Badge } from "react-bootstrap";
 import { FaHeart, FaCheck } from "react-icons/fa";
 
@@ -8,14 +9,14 @@ function ProductCard({ producto }) {
 
   return (
     <Card className="h-100 border-0 shadow-sm">
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative" }}> {/* relative needed for absolute children */}
         <Card.Img
           variant="top"
           src={producto.imagenes?.[0]}
-          style={{ aspectRatio: "3/4", objectFit: "cover" }}
+          className="product-card__img"
         />
         {producto.precioAnterior && (
-          <Badge bg="dark" style={{ position: "absolute", top: 10, left: 10 }}>
+          <Badge bg="dark" className="product-card__badge">
             -{Math.round(((producto.precioAnterior - producto.precio) / producto.precioAnterior) * 100)}%
           </Badge>
         )}
@@ -23,17 +24,17 @@ function ProductCard({ producto }) {
           variant="light"
           size="sm"
           onClick={() => setFavorito(!favorito)}
-          style={{ position: "absolute", top: 10, right: 10, borderRadius: "50%", width: 34, height: 34, padding: 0 }}
+          className="product-card__wishlist-btn"
         >
           <FaHeart color={favorito ? "red" : "#ccc"} />
         </Button>
       </div>
 
       <Card.Body className="d-flex flex-column">
-        <small className="text-muted text-uppercase" style={{ letterSpacing: 1, fontSize: 10 }}>
+        <small className="text-muted text-uppercase product-card__category">
           {producto.categoria?.nombre}
         </small>
-        <Card.Title style={{ fontSize: 14, fontFamily: "Georgia, serif" }}>
+        <Card.Title className="product-card__name">
           {producto.nombre}
         </Card.Title>
         <div className="d-flex align-items-center gap-2 mb-3">
