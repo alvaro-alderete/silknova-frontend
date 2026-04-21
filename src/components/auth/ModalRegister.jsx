@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Modal, Form, Button, Alert, Spinner, InputGroup } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaEnvelope, FaLock, FaUser } from "react-icons/fa";
+import api from "../../config/axios";
+import { saveSession } from "../../utils/auth";
 import "./ModalRegister.css";
 
 const fuerzaConfig = [
@@ -39,28 +41,16 @@ function ModalRegister({ show, onHide, onSwitchToLogin }) {
   const onSubmit = async (data) => {
     setErrorServidor("");
     try {
-      const res = await fetch("/api/auth/registro", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nombre: data.nombre,
-          email: data.email,
-          password: data.password,
-        }),
+      const { data: json } = await api.post("/auth/registro", {
+        nombre: data.nombre,
+        email: data.email,
+        password: data.password,
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.mensaje || "Error al registrarse");
-
-      localStorage.setItem("token", json.token);
-      localStorage.setItem("usuario", JSON.stringify({ nombre: json.nombre, email: json.email }));
+      saveSession(json.token, { nombre: json.nombre, email: json.email });
       setExito(true);
-
-      setTimeout(() => {
-        handleClose();
-        window.location.reload();
-      }, 1500);
+      setTimeout(() => handleClose(), 1500);
     } catch (err) {
-      setErrorServidor(err.message);
+      setErrorServidor(err.response?.data?.mensaje || err.response?.data?.message || err.message);
     }
   };
 

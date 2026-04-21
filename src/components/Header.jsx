@@ -1,15 +1,23 @@
-import { useState } from "react";
-import { Navbar, Nav, Container, Badge, Form, InputGroup, Button } from "react-bootstrap";
-import { FaShoppingCart, FaHeart, FaBars, FaSearch, FaQuestionCircle, FaTimes } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { Navbar, Nav, Container, Badge, Form, InputGroup, Button, Dropdown } from "react-bootstrap";
+import { FaShoppingCart, FaHeart, FaBars, FaSearch, FaQuestionCircle, FaTimes, FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ModalLogin from "./auth/ModalLogin";
 import ModalRegister from "./auth/ModalRegister";
+import { getUsuario, clearSession, onAuthChange } from "../utils/auth";
 
 function Header() {
   const [mostrarBusqueda, setMostrarBusqueda] = useState(false);
   const [busqueda, setBusqueda] = useState("");
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [usuario, setUsuario] = useState(getUsuario);
+
+  useEffect(() => {
+    return onAuthChange(() => setUsuario(getUsuario()));
+  }, []);
+
+  const handleLogout = () => clearSession();
 
   const cantidadCarrito = 2;
   const cantidadFavoritos = 3;
@@ -139,21 +147,45 @@ function Header() {
 
               <FaQuestionCircle size={22} style={{ cursor: "pointer" }} title="Ayuda" />
 
-              <Button
-                size="sm"
-                variant="outline-dark"
-                style={{ borderRadius: 8, fontSize: 13, fontWeight: 600 }}
-                onClick={() => setShowLogin(true)}
-              >
-                Login
-              </Button>
-              <Button
-                size="sm"
-                style={{ borderRadius: 8, fontSize: 13, fontWeight: 600, background: "#111", border: "none" }}
-                onClick={() => setShowRegister(true)}
-              >
-                Register
-              </Button>
+              {usuario ? (
+                <Dropdown align="end">
+                  <Dropdown.Toggle
+                    variant="link"
+                    className="p-0 border-0 text-dark d-flex align-items-center gap-2"
+                    style={{ textDecoration: "none", fontSize: 14, fontWeight: 600 }}
+                  >
+                    <FaUserCircle size={22} />
+                    {usuario.nombre}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu style={{ minWidth: 160, borderRadius: 10, fontSize: 14 }}>
+                    <Dropdown.Item disabled style={{ color: "#888", fontSize: 12 }}>
+                      {usuario.email}
+                    </Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item onClick={handleLogout} className="d-flex align-items-center gap-2 text-danger">
+                      <FaSignOutAlt size={13} /> Cerrar sesión
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              ) : (
+                <>
+                  <Button
+                    size="sm"
+                    variant="outline-dark"
+                    style={{ borderRadius: 8, fontSize: 13, fontWeight: 600 }}
+                    onClick={() => setShowLogin(true)}
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    size="sm"
+                    style={{ borderRadius: 8, fontSize: 13, fontWeight: 600, background: "#111", border: "none" }}
+                    onClick={() => setShowRegister(true)}
+                  >
+                    Register
+                  </Button>
+                </>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

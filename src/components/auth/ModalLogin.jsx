@@ -3,6 +3,8 @@ import { Modal, Form, Button, Alert, Spinner, InputGroup } from "react-bootstrap
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaEnvelope, FaLock } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import api from "../../config/axios";
+import { saveSession } from "../../utils/auth";
 import "./ModalLogin.css";
 
 function ModalLogin({ show, onHide, onSwitchToRegistro }) {
@@ -19,20 +21,11 @@ function ModalLogin({ show, onHide, onSwitchToRegistro }) {
   const onSubmit = async (data) => {
     setErrorServidor("");
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.mensaje || "Error al iniciar sesión");
-
-      localStorage.setItem("token", json.token);
-      localStorage.setItem("usuario", JSON.stringify({ nombre: json.nombre, email: json.email }));
+      const { data: json } = await api.post("/auth/login", data);
+      saveSession(json.token, { nombre: json.nombre, email: json.email });
       handleClose();
-      window.location.reload();
     } catch (err) {
-      setErrorServidor(err.message);
+      setErrorServidor(err.response?.data?.mensaje || err.response?.data?.message || err.message);
     }
   };
 

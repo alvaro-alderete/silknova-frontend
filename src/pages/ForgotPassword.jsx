@@ -3,6 +3,7 @@ import { Form, Button, Alert, Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { FaEnvelope, FaArrowLeft, FaCheckCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import api from "../config/axios";
 import "./ForgotPassword.css";
 
 function ForgotPassword() {
@@ -18,7 +19,7 @@ function ForgotPassword() {
   const onSubmit = async (data) => {
     setErrorServidor("");
     try {
-      await new Promise((r) => setTimeout(r, 1500));
+      await api.post("/auth/recuperar-contrasena", { email: data.email });
       setEmailEnviado(data.email);
     } catch (err) {
       setErrorServidor(err.message);
