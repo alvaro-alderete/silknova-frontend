@@ -1,0 +1,13 @@
+.product-grid {
+  background: #fafafa;
+}
+
+.product-grid__title {
+  font-family: Georgia, serif;
+  letter-spacing: 3px;
+}
+
+.product-grid__subtitle {
+  font-size: 13px;
+  letter-spacing: 2px;
+}
