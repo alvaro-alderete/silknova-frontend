@@ -4,8 +4,8 @@ import { Card, Button, Badge } from "react-bootstrap";
 import { FaHeart, FaCheck } from "react-icons/fa";
 
 function ProductCard({ producto }) {
-  const [favorito, setFavorito] = useState(false);
-  const [comprado, setComprado] = useState(false);
+  const [estaEnFavoritos, setEstaEnFavoritos] = useState(false);
+  const [fueAgregadoAlCarrito, setFueAgregadoAlCarrito] = useState(false);
 
   return (
     <Card className="h-100 border-0 shadow-sm">
@@ -23,10 +23,10 @@ function ProductCard({ producto }) {
         <Button
           variant="light"
           size="sm"
-          onClick={() => setFavorito(!favorito)}
+          onClick={() => setEstaEnFavoritos(!estaEnFavoritos)}
           className="product-card__wishlist-btn"
         >
-          <FaHeart color={favorito ? "red" : "#ccc"} />
+          <FaHeart color={estaEnFavoritos ? "red" : "#ccc"} />
         </Button>
       </div>
 
@@ -47,12 +47,12 @@ function ProductCard({ producto }) {
         </div>
 
         <Button
-          variant={comprado ? "dark" : "outline-dark"}
+          variant={fueAgregadoAlCarrito ? "dark" : "outline-dark"}
           size="sm"
           className="mt-auto"
-          onClick={() => setComprado(!comprado)}
+          onClick={() => setFueAgregadoAlCarrito(!fueAgregadoAlCarrito)}
         >
-          {comprado ? <><FaCheck className="me-1" /> Agregado</> : "Comprar"}
+          {fueAgregadoAlCarrito ? <><FaCheck className="me-1" /> Agregado</> : "Comprar"}
         </Button>
       </Card.Body>
     </Card>

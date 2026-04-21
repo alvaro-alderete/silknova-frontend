@@ -7,33 +7,33 @@ import ProductCard from "./ProductCard.jsx";
 import "./ProductGrid.css";
 
 function ProductGrid() {
-  const [productos, setProductos] = useState([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [paginaActual, setPaginaActual] = useState(1);
-  const [loading, setLoading] = useState(true);
+  const [listaProductos, setListaProductos] = useState([]);
+  const [totalDePaginas, setTotalDePaginas] = useState(1);
+  const [numeroPaginaActual, setNumeroPaginaActual] = useState(1);
+  const [estaCargando, setEstaCargando] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true);
+      setEstaCargando(true);
       try {
-        const { data } = await api.get("/products", { params: { page: paginaActual, limit: 15 } });
-        setProductos(data.productos);
-        setTotalPages(data.totalPages);
+        const { data } = await api.get("/products", { params: { page: numeroPaginaActual, limit: 15 } });
+        setListaProductos(data.productos);
+        setTotalDePaginas(data.totalPages);
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(false);
+        setEstaCargando(false);
       }
     };
     fetchProducts();
-  }, [paginaActual]);
+  }, [numeroPaginaActual]);
 
-  if (loading) return (
+  if (estaCargando) return (
     <section className="py-5 product-grid">
       <Container>
         <Row xs={2} md={3} lg={5} className="g-3">
-          {Array.from({ length: 15 }).map((_, i) => (
-            <Col key={i}>
+          {Array.from({ length: 15 }).map((_, indice) => (
+            <Col key={indice}>
               <Skeleton height={280} style={{ aspectRatio: "3/4" }} />
               <Skeleton width="60%" className="mt-2" />
               <Skeleton width="40%" />
@@ -55,32 +55,32 @@ function ProductGrid() {
         </p>
 
         <Row xs={2} md={3} lg={5} className="g-3">
-          {productos.map((p) => (
-            <Col key={p._id}>
-              <ProductCard producto={p} />
+          {listaProductos.map((producto) => (
+            <Col key={producto._id}>
+              <ProductCard producto={producto} />
             </Col>
           ))}
         </Row>
 
-        {totalPages > 1 && (
+        {totalDePaginas > 1 && (
           <div className="d-flex justify-content-center mt-5">
             <Pagination>
               <Pagination.Prev
-                disabled={paginaActual === 1}
-                onClick={() => setPaginaActual(paginaActual - 1)}
+                disabled={numeroPaginaActual === 1}
+                onClick={() => setNumeroPaginaActual(numeroPaginaActual - 1)}
               />
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+              {Array.from({ length: totalDePaginas }, (_, i) => i + 1).map((numeroPagina) => (
                 <Pagination.Item
-                  key={n}
-                  active={n === paginaActual}
-                  onClick={() => setPaginaActual(n)}
+                  key={numeroPagina}
+                  active={numeroPagina === numeroPaginaActual}
+                  onClick={() => setNumeroPaginaActual(numeroPagina)}
                 >
-                  {n}
+                  {numeroPagina}
                 </Pagination.Item>
               ))}
               <Pagination.Next
-                disabled={paginaActual === totalPages}
-                onClick={() => setPaginaActual(paginaActual + 1)}
+                disabled={numeroPaginaActual === totalDePaginas}
+                onClick={() => setNumeroPaginaActual(numeroPaginaActual + 1)}
               />
             </Pagination>
           </div>
