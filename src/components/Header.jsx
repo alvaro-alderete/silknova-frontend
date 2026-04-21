@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { Navbar, Nav, Container, Badge, Form, InputGroup } from "react-bootstrap";
+import { Navbar, Nav, Container, Badge, Form, InputGroup, Button } from "react-bootstrap";
 import { FaShoppingCart, FaHeart, FaBars, FaSearch, FaQuestionCircle, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import ModalLogin from "./auth/ModalLogin";
+import ModalRegister from "./auth/ModalRegister";
 
 function Header() {
   const [mostrarBusqueda, setMostrarBusqueda] = useState(false);
   const [busqueda, setBusqueda] = useState("");
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   const cantidadCarrito = 2;
   const cantidadFavoritos = 3;
@@ -134,10 +138,37 @@ function Header() {
               </div>
 
               <FaQuestionCircle size={22} style={{ cursor: "pointer" }} title="Ayuda" />
+
+              <Button
+                size="sm"
+                variant="outline-dark"
+                style={{ borderRadius: 8, fontSize: 13, fontWeight: 600 }}
+                onClick={() => setShowLogin(true)}
+              >
+                Login
+              </Button>
+              <Button
+                size="sm"
+                style={{ borderRadius: 8, fontSize: 13, fontWeight: 600, background: "#111", border: "none" }}
+                onClick={() => setShowRegister(true)}
+              >
+                Register
+              </Button>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
+
+      <ModalLogin
+        show={showLogin}
+        onHide={() => setShowLogin(false)}
+        onSwitchToRegistro={() => setShowRegister(true)}
+      />
+      <ModalRegister
+        show={showRegister}
+        onHide={() => setShowRegister(false)}
+        onSwitchToLogin={() => setShowLogin(true)}
+      />
     </header>
   );
 }
