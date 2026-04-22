@@ -84,9 +84,14 @@ function ResetPassword() {
                     className={`fp-input${errors.password ? " is-invalid" : ""}`}
                     isInvalid={!!errors.password}
                     style={{ paddingRight: 40 }}
-                    {...register("password", {
+                  {...register("password", {
                       required: "La contraseña es obligatoria",
                       minLength: { value: 8, message: "Mínimo 8 caracteres" },
+                      maxLength: { value: 64, message: "Máximo 64 caracteres" },
+                      pattern: {
+                        value: /^(?=.*[A-Z])(?=.*\d).+$/,
+                        message: "Debe tener al menos una mayúscula y un número",
+                      },
                     })}
                   />
                   <span
