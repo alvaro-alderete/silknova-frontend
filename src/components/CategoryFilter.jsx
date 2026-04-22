@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Collapse } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import api from "../config/axios.js";
@@ -8,8 +9,16 @@ import "./CategoryFilter.css";
 function CategoryFilter() {
   const [listaCategorias, setListaCategorias] = useState([]);
   const [panelAbierto, setPanelAbierto] = useState(false);
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [estaCargando, setEstaCargando] = useState(true);
+  const navegar = useNavigate();
+
+  const irAProductos = (categoriaId) => {
+    if (categoriaId) {
+      navegar(`/productos?categoria=${categoriaId}`);
+    } else {
+      navegar("/productos");
+    }
+  };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -26,7 +35,7 @@ function CategoryFilter() {
   }, []);
 
   const obtenerClaseBoton = (id) =>
-    `category-filter__btn ${categoriaSeleccionada === id ? "category-filter__btn--active" : "category-filter__btn--inactive"}`;
+    `category-filter__btn category-filter__btn--inactive`;
 
   if (estaCargando) return (
     <section className="py-4 category-filter">
@@ -58,11 +67,11 @@ function CategoryFilter() {
             </div>
 
             <div className="d-flex flex-wrap gap-2 mb-2">
-              <Button size="sm" onClick={() => setCategoriaSeleccionada(null)} className={obtenerClaseBoton(null)}>
+              <Button size="sm" onClick={() => irAProductos(null)} className={obtenerClaseBoton(null)}>
                 Todos
               </Button>
               {listaCategorias.slice(0, 4).map((categoria) => (
-                <Button key={categoria._id} size="sm" onClick={() => setCategoriaSeleccionada(categoria._id)} className={obtenerClaseBoton(categoria._id)}>
+                <Button key={categoria._id} size="sm" onClick={() => irAProductos(categoria._id)} className={obtenerClaseBoton(categoria._id)}>
                   {categoria.nombre}
                 </Button>
               ))}
@@ -72,7 +81,7 @@ function CategoryFilter() {
               <div>
                 <div className="d-flex flex-wrap gap-2 pt-2">
                   {listaCategorias.slice(4).map((categoria) => (
-                    <Button key={categoria._id} size="sm" onClick={() => setCategoriaSeleccionada(categoria._id)} className={obtenerClaseBoton(categoria._id)}>
+                    <Button key={categoria._id} size="sm" onClick={() => irAProductos(categoria._id)} className={obtenerClaseBoton(categoria._id)}>
                       {categoria.nombre}
                     </Button>
                   ))}
