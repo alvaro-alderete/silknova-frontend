@@ -16,8 +16,10 @@ export const clearSession = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("usuario");
   localStorage.removeItem("favoritos");
+  localStorage.removeItem("carrito");
   window.dispatchEvent(new Event(AUTH_EVENT));
   window.dispatchEvent(new Event("favoritos-change"));
+  window.dispatchEvent(new Event("carrito-change"));
 };
 
 export const onAuthChange = (callback) => {

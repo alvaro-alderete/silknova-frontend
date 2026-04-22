@@ -1,0 +1,83 @@
+.fav-page {
+  min-height: calc(100vh - 160px);
+  background: #fafafa;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.fav-title {
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: -0.5px;
+  color: #111;
+}
+
+.fav-subtitle {
+  font-size: 14px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.fav-empty-box {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #f0f0f0;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.fav-empty-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #fef2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.fav-empty-title {
+  font-family: 'Georgia', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 8px;
+}
+
+.fav-empty-desc {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 1.5rem;
+}
+
+.fav-btn-volver {
+  background: #111;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+}
+
+.fav-btn-volver:hover,
+.fav-btn-volver:focus {
+  background: #333;
+  color: #fff;
+}
+
+.fav-skeleton-card {
+  height: 300px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

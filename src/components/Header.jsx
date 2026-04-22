@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { Navbar, Nav, Container, Badge, Form, InputGroup, Button, Dropdown } from "react-bootstrap";
 import { FaShoppingCart, FaHeart, FaBars, FaSearch, FaQuestionCircle, FaTimes, FaUserCircle, FaSignOutAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ModalLogin from "./auth/ModalLogin";
 import ModalRegister from "./auth/ModalRegister";
-import { getUsuario, clearSession, onAuthChange, onOpenLoginModal } from "../utils/auth";
+import { getUsuario, clearSession, onAuthChange, onOpenLoginModal, openLoginModal } from "../utils/auth";
 import { getTotalFavoritos, onFavoritosChange } from "../utils/favoritos";
+import { getTotalCarrito, onCarritoChange, cargarCarrito } from "../utils/carrito";
 
 function Header() {
   const [mostrarBusqueda, setMostrarBusqueda] = useState(false);
@@ -14,17 +15,25 @@ function Header() {
   const [showRegister, setShowRegister] = useState(false);
   const [usuario, setUsuario] = useState(getUsuario);
   const [cantidadFavoritos, setCantidadFavoritos] = useState(getTotalFavoritos);
+  const [cantidadCarrito, setCantidadCarrito] = useState(getTotalCarrito);
 
   useEffect(() => {
+    if (getUsuario()) cargarCarrito();
     const unsubAuth = onAuthChange(() => setUsuario(getUsuario()));
     const unsubFav = onFavoritosChange(() => setCantidadFavoritos(getTotalFavoritos()));
+    const unsubCart = onCarritoChange(() => setCantidadCarrito(getTotalCarrito()));
     const unsubLogin = onOpenLoginModal(() => setShowLogin(true));
-    return () => { unsubAuth(); unsubFav(); unsubLogin(); };
+    return () => { unsubAuth(); unsubFav(); unsubCart(); unsubLogin(); };
   }, []);
 
   const handleLogout = () => clearSession();
 
-  const cantidadCarrito = 2;
+  const navigate = useNavigate();
+  const irA = (ruta) => (e) => {
+    e.preventDefault();
+    if (!getUsuario()) { openLoginModal(); return; }
+    navigate(ruta);
+  };
 
   const sugerencias = ["Vestido rojo", "Camisa blanca", "Pantalón negro"];
   const filtradas = sugerencias.filter((s) =>
@@ -88,6 +97,7 @@ function Header() {
 
       <Navbar bg="white" expand="lg" className="shadow-sm py-0">
         <Container>
+          {/* Mobile */}
           <div className="d-flex d-lg-none align-items-center gap-3 w-100 py-2">
             <Navbar.Toggle aria-controls="nav-mobile" className="border-0 p-0">
               <FaBars size={20} />
@@ -104,7 +114,7 @@ function Header() {
             </InputGroup>
 
             <div className="d-flex gap-3 align-items-center">
-              <Link to="/favoritos" style={{ color: "inherit" }}>
+              <a href="/favoritos" onClick={irA("/favoritos")} style={{ color: "inherit" }}>
                 <div style={{ position: "relative", cursor: "pointer" }}>
                   <FaHeart size={20} />
                   {cantidadFavoritos > 0 && (
@@ -113,18 +123,21 @@ function Header() {
                     </Badge>
                   )}
                 </div>
-              </Link>
-              <div style={{ position: "relative", cursor: "pointer" }}>
-                <FaShoppingCart size={20} />
-                {cantidadCarrito > 0 && (
-                  <Badge bg="dark" pill style={{ position: "absolute", top: -6, right: -8, fontSize: 9 }}>
-                    {cantidadCarrito}
-                  </Badge>
-                )}
-              </div>
+              </a>
+              <a href="/carrito" onClick={irA("/carrito")} style={{ color: "inherit" }}>
+                <div style={{ position: "relative", cursor: "pointer" }}>
+                  <FaShoppingCart size={20} />
+                  {cantidadCarrito > 0 && (
+                    <Badge bg="dark" pill style={{ position: "absolute", top: -6, right: -8, fontSize: 9 }}>
+                      {cantidadCarrito}
+                    </Badge>
+                  )}
+                </div>
+              </a>
             </div>
           </div>
 
+          {/* Desktop */}
           <Navbar.Collapse id="nav-mobile">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/">Home</Nav.Link>
@@ -133,7 +146,7 @@ function Header() {
             </Nav>
 
             <Nav className="d-none d-lg-flex align-items-center gap-3">
-              <Link to="/favoritos" style={{ color: "inherit" }}>
+              <a href="/favoritos" onClick={irA("/favoritos")} style={{ color: "inherit" }}>
                 <div style={{ position: "relative", cursor: "pointer" }}>
                   <FaHeart size={20} />
                   {cantidadFavoritos > 0 && (
@@ -142,16 +155,18 @@ function Header() {
                     </Badge>
                   )}
                 </div>
-              </Link>
+              </a>
 
-              <div style={{ position: "relative", cursor: "pointer" }}>
-                <FaShoppingCart size={20} />
-                {cantidadCarrito > 0 && (
-                  <Badge bg="dark" pill style={{ position: "absolute", top: -6, right: -10, fontSize: 10 }}>
-                    {cantidadCarrito}
-                  </Badge>
-                )}
-              </div>
+              <a href="/carrito" onClick={irA("/carrito")} style={{ color: "inherit" }}>
+                <div style={{ position: "relative", cursor: "pointer" }}>
+                  <FaShoppingCart size={20} />
+                  {cantidadCarrito > 0 && (
+                    <Badge bg="dark" pill style={{ position: "absolute", top: -6, right: -10, fontSize: 10 }}>
+                      {cantidadCarrito}
+                    </Badge>
+                  )}
+                </div>
+              </a>
 
               <FaQuestionCircle size={22} style={{ cursor: "pointer" }} title="Ayuda" />
 

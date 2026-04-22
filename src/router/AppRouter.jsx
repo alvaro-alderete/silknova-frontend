@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import Favorites from "../pages/Favorites";
+import Cart from "../pages/Cart";
 
 const Products = () => <h1>Productos</h1>;
 const NotFound = () => <h1>404 Not Found</h1>;
@@ -15,6 +16,7 @@ function AppRouter() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/favoritos" element={<Favorites />} />
+      <Route path="/carrito" element={<Cart />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
