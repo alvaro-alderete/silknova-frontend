@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Navbar, Nav, Container, Badge, Form, InputGroup, Button, Dropdown } from "react-bootstrap";
 import { FaShoppingCart, FaHeart, FaBars, FaSearch, FaQuestionCircle, FaTimes, FaUserCircle, FaSignOutAlt } from "react-icons/fa";
+import { REDES_SOCIALES } from "../constants";
 import { Link, useNavigate } from "react-router-dom";
 import ModalLogin from "./auth/ModalLogin";
 import ModalRegister from "./auth/ModalRegister";
@@ -66,27 +67,35 @@ function Header() {
         <Container className="d-flex justify-content-between align-items-center">
           <img src="/logo.png" alt="SilkNova" className="header__logo" />
 
-          <div className="d-none d-lg-flex align-items-center gap-2 position-relative">
-            {mostrarBusqueda ? (
-              <InputGroup size="sm" style={{ width: 260 }}>
-                <Form.Control
-                  autoFocus
-                  type="text"
-                  placeholder="Buscar productos..."
-                  value={busqueda}
-                  onChange={(e) => setBusqueda(e.target.value)}
-                  onKeyDown={handleBuscar}
-                />
-                <InputGroup.Text
-                  className="header__busqueda-cerrar"
-                  onClick={() => { setMostrarBusqueda(false); setBusqueda(""); }}
-                >
-                  <FaTimes />
-                </InputGroup.Text>
-              </InputGroup>
-            ) : (
-              <FaSearch size={18} className="header__busqueda-icono" onClick={() => setMostrarBusqueda(true)} />
-            )}
+          <div className="d-none d-lg-flex align-items-center gap-3">
+            <div className="d-flex gap-2 header__redes">
+              {REDES_SOCIALES.map(({ Icono, href }, i) => (
+                <a key={i} href={href} className="header__red-link"><Icono size={15} /></a>
+              ))}
+            </div>
+            <div className="header__redes-divider" />
+            <div className="position-relative">
+              {mostrarBusqueda ? (
+                <InputGroup size="sm" style={{ width: 260 }}>
+                  <Form.Control
+                    autoFocus
+                    type="text"
+                    placeholder="Buscar productos..."
+                    value={busqueda}
+                    onChange={(e) => setBusqueda(e.target.value)}
+                    onKeyDown={handleBuscar}
+                  />
+                  <InputGroup.Text
+                    className="header__busqueda-cerrar"
+                    onClick={() => { setMostrarBusqueda(false); setBusqueda(""); }}
+                  >
+                    <FaTimes />
+                  </InputGroup.Text>
+                </InputGroup>
+              ) : (
+                <FaSearch size={18} className="header__busqueda-icono" onClick={() => setMostrarBusqueda(true)} />
+              )}
+            </div>
           </div>
         </Container>
       </div>

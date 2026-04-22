@@ -124,3 +124,23 @@
 .header__btn-register:hover {
   background: #333;
 }
+
+.header__redes {
+  align-items: center;
+}
+
+.header__red-link {
+  color: #888;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.header__red-link:hover {
+  color: #111;
+}
+
+.header__redes-divider {
+  width: 1px;
+  height: 18px;
+  background: #e0e0e0;
+}
