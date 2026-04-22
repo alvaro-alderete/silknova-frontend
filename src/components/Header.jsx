@@ -35,10 +35,21 @@ function Header() {
     navigate(ruta);
   };
 
-  const sugerencias = ["Vestido rojo", "Camisa blanca", "Pantalón negro"];
-  const filtradas = sugerencias.filter((s) =>
-    s.toLowerCase().includes(busqueda.toLowerCase())
-  );
+  const irADestacado = (e) => {
+    e.preventDefault();
+    navigate("/#destacado");
+    setTimeout(() => {
+      document.getElementById("destacado")?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  };
+
+  const handleBuscar = (e) => {
+    if (e.key === "Enter" && busqueda.trim()) {
+      navigate(`/productos?busqueda=${encodeURIComponent(busqueda.trim())}`);
+      setMostrarBusqueda(false);
+      setBusqueda("");
+    }
+  };
 
   return (
     <header style={{ position: "sticky", top: 0, zIndex: 1050 }}>
@@ -56,6 +67,7 @@ function Header() {
                     placeholder="Buscar productos..."
                     value={busqueda}
                     onChange={(e) => setBusqueda(e.target.value)}
+                    onKeyDown={handleBuscar}
                   />
                   <InputGroup.Text
                     style={{ cursor: "pointer" }}
@@ -64,25 +76,6 @@ function Header() {
                     <FaTimes />
                   </InputGroup.Text>
                 </InputGroup>
-
-                {busqueda && filtradas.length > 0 && (
-                  <div
-                    className="position-absolute bg-white border rounded shadow-sm"
-                    style={{ top: "110%", left: 0, width: 260, zIndex: 200 }}
-                  >
-                    {filtradas.map((s) => (
-                      <div
-                        key={s}
-                        className="px-3 py-2"
-                        style={{ cursor: "pointer", fontSize: 14 }}
-                        onClick={() => setBusqueda(s)}
-                      >
-                        <FaSearch size={11} className="me-2 text-muted" />
-                        {s}
-                      </div>
-                    ))}
-                  </div>
-                )}
               </>
             ) : (
               <FaSearch
@@ -97,7 +90,6 @@ function Header() {
 
       <Navbar bg="white" expand="lg" className="shadow-sm py-0">
         <Container>
-          {/* Mobile */}
           <div className="d-flex d-lg-none align-items-center gap-3 w-100 py-2">
             <Navbar.Toggle aria-controls="nav-mobile" className="border-0 p-0">
               <FaBars size={20} />
@@ -110,6 +102,7 @@ function Header() {
                 placeholder="Buscar..."
                 value={busqueda}
                 onChange={(e) => setBusqueda(e.target.value)}
+                onKeyDown={handleBuscar}
               />
             </InputGroup>
 
@@ -137,11 +130,11 @@ function Header() {
             </div>
           </div>
 
-          {/* Desktop */}
           <Navbar.Collapse id="nav-mobile">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/">Home</Nav.Link>
-              <Nav.Link as={Link} to="/destacado">Destacado</Nav.Link>
+              <Nav.Link href="/#destacado" onClick={irADestacado}>Destacado</Nav.Link>
+              <Nav.Link as={Link} to="/productos">Productos</Nav.Link>
               <Nav.Link as={Link} to="/contacto">Contacto</Nav.Link>
             </Nav>
 

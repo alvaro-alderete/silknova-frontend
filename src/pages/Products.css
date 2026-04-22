@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap');
+
+.productos__subtitulo {
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.productos__titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 400;
+}
+
+.productos__btn-filtros-mobile {
+  border-radius: 1px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.productos__busqueda-activa {
+  font-size: 13px;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.productos__busqueda-limpiar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #999;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0 2px;
+}
+
+.productos__busqueda-limpiar:hover {
+  color: #111;
+}
+
+.productos__select-orden {
+  font-size: 13px;
+  border: 1px solid #ddd;
+  border-radius: 1px;
+  padding: 6px 12px;
+  background: #fff;
+  color: #333;
+}
+
+.productos__select-orden:focus {
+  outline: none;
+  border-color: #111;
+  box-shadow: none;
+}
+
+.productos__filtros-sidebar {
+  position: sticky;
+  top: 20px;
+}
+
+.productos__filtro-titulo {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.productos__filtro-opcion {
+  padding: 6px 0 6px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  color: #555;
+  border-left: 2px solid transparent;
+  transition: all 0.15s;
+}
+
+.productos__filtro-opcion:hover {
+  color: #111;
+}
+
+.productos__filtro-opcion--activa {
+  font-weight: 600;
+  color: #111;
+  border-left-color: #111;
+}
+
+.productos__filtro-opcion--capitalizar {
+  text-transform: capitalize;
+}
+
+.productos__filtro-switch-label {
+  font-size: 14px;
+}
+
+.productos__skeleton {
+  background: #f0f0f0;
+  aspect-ratio: 3/4;
+  border-radius: 2px;
+}
+
+.productos__vacio {
+  text-align: center;
+  padding: 60px 0;
+  color: #aaa;
+  font-size: 15px;
+}
+
+.page-link {
+  color: #111;
+  border-radius: 1px !important;
+}
+
+.page-item.active .page-link {
+  background: #111;
+  border-color: #111;
+}
+
+.productos__offcanvas-titulo {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+}

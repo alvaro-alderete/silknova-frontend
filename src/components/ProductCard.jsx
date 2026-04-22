@@ -38,6 +38,10 @@ function ProductCard({ producto }) {
     }
   };
 
+  const categoriaLabel = producto.categoria?.nombre ?? producto.categoria;
+  const talles = producto.talle ?? producto.talles ?? [];
+  const stock = producto.stock ?? null;
+
   return (
     <Card className="h-100 border-0 shadow-sm">
       <div style={{ position: "relative" }}>
@@ -51,6 +55,9 @@ function ProductCard({ producto }) {
             -{Math.round(((producto.precioAnterior - producto.precio) / producto.precioAnterior) * 100)}%
           </Badge>
         )}
+        {producto.destacado && (
+          <span className="product-card__top-badge">★ TOP</span>
+        )}
         <Button
           variant="light"
           size="sm"
@@ -63,12 +70,12 @@ function ProductCard({ producto }) {
 
       <Card.Body className="d-flex flex-column">
         <small className="text-muted text-uppercase product-card__category">
-          {producto.categoria?.nombre}
+          {categoriaLabel}
         </small>
         <Card.Title className="product-card__name">
           {producto.nombre}
         </Card.Title>
-        <div className="d-flex align-items-center gap-2 mb-3">
+        <div className="d-flex align-items-center gap-2 mb-2">
           {producto.precioAnterior && (
             <small className="text-muted text-decoration-line-through">
               ${producto.precioAnterior.toLocaleString()}
@@ -77,14 +84,26 @@ function ProductCard({ producto }) {
           <span className="fw-bold">${producto.precio.toLocaleString()}</span>
         </div>
 
+        {talles.length > 0 && (
+          <div className="d-flex flex-wrap gap-1 mb-2">
+            {talles.slice(0, 4).map((t) => (
+              <span key={t} className="product-card__talle">{t}</span>
+            ))}
+          </div>
+        )}
+
+        {stock !== null && stock <= 5 && stock > 0 && (
+          <small className="product-card__stock-low mb-2">¡Solo {stock} disponibles!</small>
+        )}
+
         <Button
           variant={agregado ? "dark" : "outline-dark"}
           size="sm"
           className="mt-auto"
           onClick={handleComprar}
-          disabled={agregando}
+          disabled={agregando || stock === 0}
         >
-          {agregado ? <><FaCheck className="me-1" />Agregado</> : agregando ? "..." : "Comprar"}
+          {stock === 0 ? "Sin stock" : agregado ? <><FaCheck className="me-1" />Agregado</> : agregando ? "..." : "Agregar"}
         </Button>
       </Card.Body>
     </Card>

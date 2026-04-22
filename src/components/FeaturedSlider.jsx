@@ -56,7 +56,7 @@ function FeaturedSlider() {
   if (!listaProductosDestacados.length) return null;
 
   return (
-    <section className="featured-slider">
+    <section id="destacado" className="featured-slider">
       <Container>
         <p className="featured-slider__tag">Selección exclusiva</p>
         <h2 className="featured-slider__title">Destacados</h2>

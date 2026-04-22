@@ -29,7 +29,6 @@ export const cargarCarrito = async () => {
   if (!localStorage.getItem("token")) { clearCarrito(); return; }
   try {
     const { data } = await api.get("/cart/summary");
-    console.log("summary: ", data);
     const summary = data.summary ?? data;
     guardarCarrito(summary);
     return summary;
