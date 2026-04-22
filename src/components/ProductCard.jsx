@@ -4,10 +4,13 @@ import { Card, Button, Badge } from "react-bootstrap";
 import { FaHeart, FaCheck } from "react-icons/fa";
 import { esFavorito, toggleFavoritoAPI, onFavoritosChange } from "../utils/favoritos";
 import { getUsuario, openLoginModal } from "../utils/auth";
+import { agregarAlCarrito } from "../utils/carrito";
+import toast from "react-hot-toast";
 
 function ProductCard({ producto }) {
   const [enFav, setEnFav] = useState(() => esFavorito(producto._id));
-  const [fueAgregadoAlCarrito, setFueAgregadoAlCarrito] = useState(false);
+  const [agregando, setAgregando] = useState(false);
+  const [agregado, setAgregado] = useState(false);
 
   useEffect(() => {
     return onFavoritosChange(() => setEnFav(esFavorito(producto._id)));
@@ -19,9 +22,20 @@ function ProductCard({ producto }) {
     catch (e) { console.error(e); }
   };
 
-  const handleComprar = () => {
+  const handleComprar = async () => {
     if (!getUsuario()) { openLoginModal(); return; }
-    setFueAgregadoAlCarrito(!fueAgregadoAlCarrito);
+    setAgregando(true);
+    try {
+      await agregarAlCarrito(producto._id);
+      setAgregado(true);
+      toast.success("Agregado al carrito");
+      setTimeout(() => setAgregado(false), 2000);
+    } catch (e) {
+      console.error("Error al agregar al carrito:", e?.response?.data || e.message);
+      toast.error(e?.response?.data?.mensaje || "No se pudo agregar");
+    } finally {
+      setAgregando(false);
+    }
   };
 
   return (
@@ -64,12 +78,13 @@ function ProductCard({ producto }) {
         </div>
 
         <Button
-          variant={fueAgregadoAlCarrito ? "dark" : "outline-dark"}
+          variant={agregado ? "dark" : "outline-dark"}
           size="sm"
           className="mt-auto"
           onClick={handleComprar}
+          disabled={agregando}
         >
-          {fueAgregadoAlCarrito ? <><FaCheck className="me-1" /> Agregado</> : "Comprar"}
+          {agregado ? <><FaCheck className="me-1" />Agregado</> : agregando ? "..." : "Comprar"}
         </Button>
       </Card.Body>
     </Card>
