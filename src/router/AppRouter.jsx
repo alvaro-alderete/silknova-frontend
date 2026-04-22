@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import ForgotPassword from "../pages/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword";
 
 const Products = () => <h1>Productos</h1>;
 const NotFound = () => <h1>404 Not Found</h1>;
@@ -11,6 +12,7 @@ function AppRouter() {
       <Route path="/" element={<Home />} />
       <Route path="/productos" element={<Products />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
