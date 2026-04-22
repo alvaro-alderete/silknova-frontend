@@ -75,9 +75,10 @@ function ModalLogin({ show, onHide, onSwitchToRegistro }) {
                 isInvalid={!!errors.email}
                 {...register("email", {
                   required: "El email es obligatorio",
+                  maxLength: { value: 100, message: "El email es demasiado largo" },
                   pattern: {
                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Ingresá un email válido",
+                    message: "Ingresá un email válido (ej: nombre@dominio.com)",
                   },
                 })}
               />
@@ -100,6 +101,7 @@ function ModalLogin({ show, onHide, onSwitchToRegistro }) {
                   {...register("password", {
                     required: "La contraseña es obligatoria",
                     minLength: { value: 6, message: "Mínimo 6 caracteres" },
+                    maxLength: { value: 64, message: "Máximo 64 caracteres" },
                   })}
                 />
                 <button

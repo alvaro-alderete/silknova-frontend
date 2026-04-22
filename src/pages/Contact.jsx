@@ -103,7 +103,15 @@ function Contact() {
                             className={`contact-input${errors.nombre ? " is-invalid" : ""}`}
                             placeholder="Juan Pérez"
                             isInvalid={!!errors.nombre}
-                            {...register("nombre", { required: "El nombre es obligatorio" })}
+                            {...register("nombre", {
+                              required: "El nombre es obligatorio",
+                              minLength: { value: 2, message: "Mínimo 2 caracteres" },
+                              maxLength: { value: 50, message: "Máximo 50 caracteres" },
+                              pattern: {
+                                value: /^[a-zA-Zà-üÀ-Ü\s]+$/,
+                                message: "Solo letras y espacios",
+                              },
+                            })}
                           />
                           <Form.Control.Feedback type="invalid" className="contact-feedback">
                             {errors.nombre?.message}
@@ -121,9 +129,10 @@ function Contact() {
                             isInvalid={!!errors.email}
                             {...register("email", {
                               required: "El email es obligatorio",
+                              maxLength: { value: 100, message: "El email es demasiado largo" },
                               pattern: {
                                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: "Ingresá un email válido",
+                                message: "Ingresá un email válido (ej: nombre@dominio.com)",
                               },
                             })}
                           />
@@ -140,7 +149,11 @@ function Contact() {
                             className={`contact-input${errors.asunto ? " is-invalid" : ""}`}
                             placeholder="Consulta sobre pedido"
                             isInvalid={!!errors.asunto}
-                            {...register("asunto", { required: "El asunto es obligatorio" })}
+                            {...register("asunto", {
+                              required: "El asunto es obligatorio",
+                              minLength: { value: 4, message: "Mínimo 4 caracteres" },
+                              maxLength: { value: 100, message: "Máximo 100 caracteres" },
+                            })}
                           />
                           <Form.Control.Feedback type="invalid" className="contact-feedback">
                             {errors.asunto?.message}
@@ -160,6 +173,7 @@ function Contact() {
                             {...register("mensaje", {
                               required: "El mensaje es obligatorio",
                               minLength: { value: 10, message: "Mínimo 10 caracteres" },
+                              maxLength: { value: 1000, message: "Máximo 1000 caracteres" },
                             })}
                           />
                           <Form.Control.Feedback type="invalid" className="contact-feedback">
