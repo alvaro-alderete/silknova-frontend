@@ -5,7 +5,7 @@ import ResetPassword from "../pages/ResetPassword";
 import Favorites from "../pages/Favorites";
 import Cart from "../pages/Cart";
 import Products from "../pages/Products";
-const NotFound = () => <h1>404 Not Found</h1>;
+import NotFound from "../pages/NotFound";
 
 function AppRouter() {
   return (

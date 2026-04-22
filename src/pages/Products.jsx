@@ -3,16 +3,15 @@ import { Container, Row, Col, Button, Form, Offcanvas, Stack, Pagination } from 
 import { useSearchParams, useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import api from "../config/axios";
+import { GENEROS } from "../constants";
 import "./Products.css";
-
-const GENEROS = ["Todos", "mujer", "hombre", "unisex"];
 
 export default function ProductsPage() {
   const [parametrosBusqueda] = useSearchParams();
   const navegar = useNavigate();
 
   const textoBuscado = parametrosBusqueda.get("busqueda") || "";
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(parametrosBusqueda.get("categoria") || "");
   const [generoSeleccionado, setGeneroSeleccionado] = useState("Todos");
   const [soloDestacados, setSoloDestacados] = useState(false);
   const [ordenSeleccionado, setOrdenSeleccionado] = useState("default");

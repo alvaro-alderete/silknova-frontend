@@ -1,5 +1,5 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { FaInstagram, FaFacebookF, FaTwitter, FaWhatsapp } from "react-icons/fa";
+import { LINKS_NAVEGACION, LINKS_AYUDA, REDES_SOCIALES } from "../constants";
 import "./Footer.css";
 
 function Footer() {
@@ -28,7 +28,7 @@ function Footer() {
           <Col xs={6} lg={2}>
             <h6 className="footer-heading">Navegación</h6>
             <ul className="list-unstyled footer-links">
-              {[["Home", "/"], ["Destacado", "/destacado"], ["Contacto", "/contacto"], ["Favoritos", "/favoritos"]].map(([label, href]) => (
+              {LINKS_NAVEGACION.map(({ label, href }) => (
                 <li key={label} className="mb-2">
                   <a href={href} className="footer-link">{label}</a>
                 </li>
@@ -39,7 +39,7 @@ function Footer() {
           <Col xs={6} lg={2}>
             <h6 className="footer-heading">Ayuda</h6>
             <ul className="list-unstyled footer-links">
-              {[["Preguntas frecuentes", "/faq"], ["Envíos", "/envios"], ["Devoluciones", "/devoluciones"], ["Términos y condiciones", "/terminos"]].map(([label, href]) => (
+              {LINKS_AYUDA.map(({ label, href }) => (
                 <li key={label} className="mb-2">
                   <a href={href} className="footer-link">{label}</a>
                 </li>
@@ -53,9 +53,9 @@ function Footer() {
             <p className="footer-contact-text">+54 381 000-0000</p>
 
             <div className="footer-socials">
-              {[[FaInstagram, "#"], [FaFacebookF, "#"], [FaTwitter, "#"], [FaWhatsapp, "#"]].map(([Icon, href], i) => (
+              {REDES_SOCIALES.map(({ Icono, href }, i) => (
                 <a key={i} href={href} className="footer-social-link">
-                  <Icon size={20} />
+                  <Icono size={20} />
                 </a>
               ))}
             </div>
@@ -74,9 +74,9 @@ function Footer() {
         <Row className="d-flex d-lg-none text-center mb-4">
           <Col>
             <div className="footer-mobile-socials">
-              {[[FaInstagram, "#"], [FaFacebookF, "#"], [FaTwitter, "#"], [FaWhatsapp, "#"]].map(([Icon, href], i) => (
+              {REDES_SOCIALES.map(({ Icono, href }, i) => (
                 <a key={i} href={href} className="footer-social-link">
-                  <Icon size={22} />
+                  <Icono size={22} />
                 </a>
               ))}
             </div>
