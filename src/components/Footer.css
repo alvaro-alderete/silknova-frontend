@@ -1,0 +1,109 @@
+.footer {
+  background: #1a1a2e;
+  color: #e0e0e0;
+}
+
+.footer-logo {
+  height: 40px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.footer-brand {
+  display: none;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 3px;
+  color: #fff;
+}
+
+.footer-tagline {
+  font-size: 13px;
+  color: #a0a0b0;
+  margin-top: 12px;
+}
+
+.footer-heading {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.footer-links {
+  font-size: 14px;
+}
+
+.footer-link {
+  color: #b0b0c0;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-link:hover {
+  color: #ffffff;
+}
+
+.footer-contact-text {
+  font-size: 13px;
+  color: #b0b0c0;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.footer-social-link {
+  color: #b0b0c0;
+  transition: color 0.2s;
+}
+
+.footer-social-link:hover {
+  color: #ffffff;
+}
+
+.footer-datafiscal {
+  margin-top: 20px;
+}
+
+.footer-datafiscal-label {
+  font-size: 11px;
+  color: #7070a0;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footer-datafiscal-qr {
+  height: 80px;
+  width: 80px;
+  border-radius: 4px;
+}
+
+.footer-mobile-socials {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.footer-mobile-brand {
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 3px;
+  color: #fff;
+}
+
+.footer-divider {
+  border-color: #2e2e4e;
+  margin-bottom: 16px;
+}
+
+.footer-copy {
+  font-size: 12px;
+  color: #6060a0;
+}

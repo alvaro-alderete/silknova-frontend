@@ -1,14 +1,21 @@
 import { Routes, Route } from "react-router-dom";
-
-const Home = () => <h1 data-aos="fade-up">Home SilkNova</h1>;
-const Products = () => <h1>Productos</h1>;
-const NotFound = () => <h1>404 Not Found</h1>;
+import Home from "../pages/Home";
+import ForgotPassword from "../pages/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword";
+import Favorites from "../pages/Favorites";
+import Cart from "../pages/Cart";
+import Products from "../pages/Products";
+import NotFound from "../pages/NotFound";
 
 function AppRouter() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/productos" element={<Products />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/favoritos" element={<Favorites />} />
+      <Route path="/carrito" element={<Cart />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
