@@ -104,7 +104,7 @@ function PaginaCarrito() {
     const nueva = item.cantidad + delta;
     if (nueva < 1) return;
     try { await actualizarCantidad(item.producto._id, nueva, item.talle, item.color); }
-    catch { toast.error("No se pudo actualizar"); }
+    catch (e) { toast.error(e?.response?.data?.mensaje || "No se pudo actualizar la cantidad"); }
   };
 
   const handleEliminar = async (item) => {

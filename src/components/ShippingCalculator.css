@@ -98,3 +98,26 @@
   font-weight: 700;
   color: #111;
 }
+
+.shipping__ml-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffe600;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-top: 10px;
+}
+
+.shipping__ml-logo {
+  height: 18px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.shipping__ml-texto {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+}

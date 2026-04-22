@@ -148,10 +148,19 @@ function ShippingCalculator({ onEnvioCalculado, onDireccionCompleta }) {
           <FaCheckCircle size={12} className="shipping__resultado-icono" />
           <div>
             <span className="shipping__localidad">{cpResultado.localidad}, {cpResultado.provincia}</span>
-            <span className="shipping__costo">Envío: ${cpResultado.costo.toLocaleString()} · Mercado Envíos</span>
+            <span className="shipping__costo">Envío: ${cpResultado.costo.toLocaleString()}</span>
           </div>
         </div>
       )}
+
+      <div className="shipping__ml-banner">
+        <img
+          src="https://http2.mlstatic.com/frontend-assets/ui-navigation/5.19.5/mercadolibre/logo__large_plus@2x.png"
+          alt="Mercado Libre"
+          className="shipping__ml-logo"
+        />
+        <span className="shipping__ml-texto">Envíos a todo el país · 3 a 7 días hábiles</span>
+      </div>
     </div>
   );
 }
