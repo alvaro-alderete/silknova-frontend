@@ -18,6 +18,7 @@ function Header() {
   const [usuario, setUsuario] = useState(getUsuario);
   const [cantidadFavoritos, setCantidadFavoritos] = useState(getTotalFavoritos);
   const [cantidadCarrito, setCantidadCarrito] = useState(getTotalCarrito);
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     if (getUsuario()) cargarCarrito();
@@ -30,14 +31,18 @@ function Header() {
 
   const navigate = useNavigate();
 
+  const cerrarMenu = () => setExpanded(false);
+
   const irA = (ruta) => (e) => {
     e.preventDefault();
+    cerrarMenu();
     if (!getUsuario()) { openLoginModal(); return; }
     navigate(ruta);
   };
 
   const irADestacado = (e) => {
     e.preventDefault();
+    cerrarMenu();
     navigate("/#destacado");
     setTimeout(() => {
       document.getElementById("destacado")?.scrollIntoView({ behavior: "smooth" });
@@ -49,6 +54,7 @@ function Header() {
       navigate(`/productos?busqueda=${encodeURIComponent(busqueda.trim())}`);
       setMostrarBusqueda(false);
       setBusqueda("");
+      cerrarMenu();
     }
   };
 
@@ -100,10 +106,14 @@ function Header() {
         </Container>
       </div>
 
-      <Navbar bg="white" expand="lg" className="shadow-sm py-0">
+      <Navbar expanded={expanded} onToggle={setExpanded} bg="white" expand="lg" className="shadow-sm py-0">
         <Container>
           <div className="d-flex d-lg-none align-items-center gap-3 w-100 py-2">
-            <Navbar.Toggle aria-controls="nav-collapse" className="border-0 p-0">
+            <Navbar.Toggle
+              aria-controls="nav-collapse"
+              className="border-0 p-0"
+              onClick={() => setExpanded((prev) => !prev)}
+            >
               <FaBars size={20} />
             </Navbar.Toggle>
 
@@ -119,17 +129,29 @@ function Header() {
             </InputGroup>
 
             <div className="d-flex gap-3 align-items-center">
-              <IconoConBadge href="/favoritos" onClick={irA("/favoritos")} icono={FaHeart}       cantidad={cantidadFavoritos} badgeBg="danger" />
-              <IconoConBadge href="/carrito"   onClick={irA("/carrito")}   icono={FaShoppingCart} cantidad={cantidadCarrito}   badgeBg="dark"   />
+              <IconoConBadge
+                href="/favoritos"
+                onClick={(e) => { irA("/favoritos")(e); cerrarMenu(); }}
+                icono={FaHeart}
+                cantidad={cantidadFavoritos}
+                badgeBg="danger"
+              />
+              <IconoConBadge
+                href="/carrito"
+                onClick={(e) => { irA("/carrito")(e); cerrarMenu(); }}
+                icono={FaShoppingCart}
+                cantidad={cantidadCarrito}
+                badgeBg="dark"
+              />
             </div>
           </div>
 
           <Navbar.Collapse id="nav-collapse">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/">Home</Nav.Link>
+              <Nav.Link as={Link} to="/" onClick={cerrarMenu}>Home</Nav.Link>
               <Nav.Link href="/#destacado" onClick={irADestacado}>Destacado</Nav.Link>
-              <Nav.Link as={Link} to="/productos">Productos</Nav.Link>
-              <Nav.Link as={Link} to="/contacto">Contacto</Nav.Link>
+              <Nav.Link as={Link} to="/productos" onClick={cerrarMenu}>Productos</Nav.Link>
+              <Nav.Link as={Link} to="/contacto" onClick={cerrarMenu}>Contacto</Nav.Link>
             </Nav>
 
             <Nav className="align-items-lg-center gap-3">
@@ -145,7 +167,10 @@ function Header() {
                     <FaUserCircle size={18} className="me-2" />
                     <span className="header__usuario-nombre">{usuario.nombre}</span>
                     <small className="header__usuario-email">{usuario.email}</small>
-                    <button className="header__btn-logout" onClick={clearSession}>
+                    <button
+                      className="header__btn-logout"
+                      onClick={() => { clearSession(); cerrarMenu(); }}
+                    >
                       <FaSignOutAlt size={13} className="me-2" />Cerrar sesión
                     </button>
                   </div>
@@ -166,10 +191,19 @@ function Header() {
                 </>
               ) : (
                 <div className="d-flex gap-2 flex-wrap">
-                  <Button size="sm" variant="outline-dark" className="header__btn-login" onClick={() => setShowLogin(true)}>
+                  <Button
+                    size="sm"
+                    variant="outline-dark"
+                    className="header__btn-login"
+                    onClick={() => { setShowLogin(true); cerrarMenu(); }}
+                  >
                     Login
                   </Button>
-                  <Button size="sm" className="header__btn-register" onClick={() => setShowRegister(true)}>
+                  <Button
+                    size="sm"
+                    className="header__btn-register"
+                    onClick={() => { setShowRegister(true); cerrarMenu(); }}
+                  >
                     Register
                   </Button>
                 </div>

@@ -39,6 +39,7 @@ export default function ProductsPage() {
         if (categoriaSeleccionada)          filtros.categoria = categoriaSeleccionada;
         if (generoSeleccionado !== "Todos") filtros.genero    = generoSeleccionado;
         if (soloDestacados)                 filtros.destacado = "true";
+        if (ordenSeleccionado !== "default") filtros.orden    = ordenSeleccionado;
         const { data } = await api.get("/products", { params: filtros });
         setListaProductos(data.productos);
         setTotalPaginas(data.totalPages ?? 1);
@@ -49,11 +50,12 @@ export default function ProductsPage() {
       }
     };
     cargarProductos();
-  }, [paginaActual, textoBuscado, categoriaSeleccionada, generoSeleccionado, soloDestacados]);
+  }, [paginaActual, textoBuscado, categoriaSeleccionada, generoSeleccionado, soloDestacados, ordenSeleccionado]);
 
   const cambiarFiltro = (setter) => (nuevoValor) => {
     setter(nuevoValor);
     setPaginaActual(1);
+    setMostrarFiltrosMobile(false);
   };
 
   const PanelFiltros = () => (
