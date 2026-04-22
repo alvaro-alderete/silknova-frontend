@@ -1,11 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./ProductCard.css";
 import { Card, Button, Badge } from "react-bootstrap";
 import { FaHeart, FaCheck } from "react-icons/fa";
+import { esFavorito, toggleFavoritoAPI, onFavoritosChange } from "../utils/favoritos";
+import { getUsuario, openLoginModal } from "../utils/auth";
 
 function ProductCard({ producto }) {
-  const [estaEnFavoritos, setEstaEnFavoritos] = useState(false);
+  const [enFav, setEnFav] = useState(() => esFavorito(producto._id));
   const [fueAgregadoAlCarrito, setFueAgregadoAlCarrito] = useState(false);
+
+  useEffect(() => {
+    return onFavoritosChange(() => setEnFav(esFavorito(producto._id)));
+  }, [producto._id]);
+
+  const handleToggleFav = async () => {
+    if (!getUsuario()) { openLoginModal(); return; }
+    try { await toggleFavoritoAPI(producto); }
+    catch (e) { console.error(e); }
+  };
+
+  const handleComprar = () => {
+    if (!getUsuario()) { openLoginModal(); return; }
+    setFueAgregadoAlCarrito(!fueAgregadoAlCarrito);
+  };
 
   return (
     <Card className="h-100 border-0 shadow-sm">
@@ -23,10 +40,10 @@ function ProductCard({ producto }) {
         <Button
           variant="light"
           size="sm"
-          onClick={() => setEstaEnFavoritos(!estaEnFavoritos)}
+          onClick={handleToggleFav}
           className="product-card__wishlist-btn"
         >
-          <FaHeart color={estaEnFavoritos ? "red" : "#ccc"} />
+          <FaHeart color={enFav ? "red" : "#ccc"} />
         </Button>
       </div>
 
@@ -50,7 +67,7 @@ function ProductCard({ producto }) {
           variant={fueAgregadoAlCarrito ? "dark" : "outline-dark"}
           size="sm"
           className="mt-auto"
-          onClick={() => setFueAgregadoAlCarrito(!fueAgregadoAlCarrito)}
+          onClick={handleComprar}
         >
           {fueAgregadoAlCarrito ? <><FaCheck className="me-1" /> Agregado</> : "Comprar"}
         </Button>
