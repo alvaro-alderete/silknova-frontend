@@ -1,0 +1,126 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1050;
+}
+
+.header__top {
+  background: #fff;
+  border-bottom: 1px solid #ebebeb;
+  padding: 8px 0;
+}
+
+.header__logo {
+  height: 60px;
+  object-fit: contain;
+  filter: brightness(0);
+}
+
+.header__busqueda-icono {
+  cursor: pointer;
+}
+
+.header__busqueda-cerrar {
+  cursor: pointer;
+}
+
+.header__icono-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.header__icono-link:hover {
+  color: inherit;
+}
+
+.header__icono-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.header__badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  font-size: 9px;
+}
+
+.header__icono-ayuda {
+  cursor: pointer;
+}
+
+.header__dropdown-toggle {
+  padding: 0;
+  border: none;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.header__dropdown-toggle::after {
+  display: none;
+}
+
+.header__dropdown-menu {
+  min-width: 160px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.header__dropdown-email {
+  color: #888;
+  font-size: 12px;
+}
+
+.header__usuario-mobile {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0 8px;
+  border-top: 1px solid #f0f0f0;
+  gap: 4px;
+}
+
+.header__usuario-nombre {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+}
+
+.header__usuario-email {
+  font-size: 12px;
+  color: #888;
+}
+
+.header__btn-logout {
+  background: none;
+  border: none;
+  padding: 6px 0;
+  font-size: 13px;
+  color: #dc3545;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.header__btn-login {
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.header__btn-register {
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  background: #111;
+  border: none;
+}
+
+.header__btn-register:hover {
+  background: #333;
+}
