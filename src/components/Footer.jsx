@@ -1,8 +1,18 @@
 import { Container, Row, Col } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import { LINKS_NAVEGACION, LINKS_AYUDA, REDES_SOCIALES } from "../constants";
 import "./Footer.css";
 
 function Footer() {
+  const navegar = useNavigate();
+
+  const irADestacado = (e) => {
+    e.preventDefault();
+    navegar("/#destacado");
+    setTimeout(() => {
+      document.getElementById("destacado")?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  };
   return (
     <footer className="footer pt-5 pb-3 mt-5">
       <Container>
@@ -30,7 +40,10 @@ function Footer() {
             <ul className="list-unstyled footer-links">
               {LINKS_NAVEGACION.map(({ label, href }) => (
                 <li key={label} className="mb-2">
-                  <a href={href} className="footer-link">{label}</a>
+                  {label === "Destacado"
+                    ? <a href="/#destacado" onClick={irADestacado} className="footer-link">{label}</a>
+                    : <Link to={href} className="footer-link">{label}</Link>
+                  }
                 </li>
               ))}
             </ul>
@@ -41,7 +54,7 @@ function Footer() {
             <ul className="list-unstyled footer-links">
               {LINKS_AYUDA.map(({ label, href }) => (
                 <li key={label} className="mb-2">
-                  <a href={href} className="footer-link">{label}</a>
+                  <Link to={href} className="footer-link">{label}</Link>
                 </li>
               ))}
             </ul>
