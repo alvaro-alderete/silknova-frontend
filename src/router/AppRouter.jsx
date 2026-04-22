@@ -5,6 +5,8 @@ import ResetPassword from "../pages/ResetPassword";
 import Favorites from "../pages/Favorites";
 import Cart from "../pages/Cart";
 import Products from "../pages/Products";
+import Contact from "../pages/Contact";
+import OrderConfirmed from "../pages/OrderConfirmed";
 import NotFound from "../pages/NotFound";
 
 function AppRouter() {
@@ -16,6 +18,8 @@ function AppRouter() {
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/favoritos" element={<Favorites />} />
       <Route path="/carrito" element={<Cart />} />
+      <Route path="/contacto" element={<Contact />} />
+      <Route path="/orden-confirmada" element={<OrderConfirmed />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

@@ -10,9 +10,9 @@ export const LINKS_NAVEGACION = [
 ];
 
 export const LINKS_AYUDA = [
-  { label: "Preguntas frecuentes",  href: "/faq" },
-  { label: "Envíos",                href: "/envios" },
-  { label: "Devoluciones",          href: "/devoluciones" },
+  { label: "Preguntas frecuentes",   href: "/faq" },
+  { label: "Envíos",                 href: "/envios" },
+  { label: "Devoluciones",           href: "/devoluciones" },
   { label: "Términos y condiciones", href: "/terminos" },
 ];
 
@@ -22,3 +22,10 @@ export const REDES_SOCIALES = [
   { Icono: FaTwitter,   href: "#" },
   { Icono: FaWhatsapp,  href: "#" },
 ];
+
+export const PRECIO_ENVIO_GBA  = 1500;
+export const PRECIO_ENVIO_OTRO = 2500;
+export const ZONAS_GBA = ["buenos aires", "ciudad autónoma de buenos aires", "caba"];
+
+export const CAMPOS_DIRECCION  = ["calle", "numero", "ciudad", "provincia", "cp"];
+export const CAMPOS_TARJETA    = ["nombre", "numero", "vencimiento", "cvv"];

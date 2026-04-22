@@ -161,3 +161,113 @@
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+/* Clases que reemplazan estilos inline */
+.cart-page__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.cart-page__contador {
+  font-size: 13px;
+  color: #888;
+}
+
+.cart-item-precios {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.cart-item-acciones {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.cart-item-subtotal {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cart-qty-valor {
+  font-size: 14px;
+  font-weight: 600;
+  min-width: 16px;
+  text-align: center;
+}
+
+.cart-divider {
+  margin: 1rem 0;
+  border-color: #f5f5f5;
+}
+
+.cart-hr {
+  border-color: #f0f0f0;
+  margin: 1rem 0;
+}
+
+.cart-summary-fila {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.cart-total-fila {
+  margin-bottom: 0;
+}
+
+.cart-btn-explorar {
+  background: #111;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.cart-btn-explorar:hover {
+  background: #333 !important;
+}
+
+.cart-btn-seguir {
+  width: 100%;
+  margin-top: 8px;
+  font-size: 13px;
+  color: #888;
+  text-decoration: none;
+}
+
+.cart-btn-seguir:hover {
+  color: #111;
+}
+
+/* Modal pago */
+.modal-pago {
+  padding: 1.75rem;
+}
+
+.modal-pago__titulo {
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+.modal-pago__subtitulo {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 1.25rem;
+}
+
+.modal-pago__label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.modal-pago__input {
+  border-radius: 8px !important;
+}
