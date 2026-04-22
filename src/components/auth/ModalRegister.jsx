@@ -107,6 +107,11 @@ function ModalRegister({ show, onHide, onSwitchToLogin }) {
                 {...register("nombre", {
                   required: "El nombre es obligatorio",
                   minLength: { value: 2, message: "Mínimo 2 caracteres" },
+                  maxLength: { value: 50, message: "Máximo 50 caracteres" },
+                  pattern: {
+                    value: /^[a-zA-Zà-üÀ-Ü\s]+$/,
+                    message: "Solo letras y espacios",
+                  },
                 })}
               />
               <Form.Control.Feedback type="invalid" style={{ fontSize: 12 }}>
@@ -126,9 +131,10 @@ function ModalRegister({ show, onHide, onSwitchToLogin }) {
                 isInvalid={!!errors.email}
                 {...register("email", {
                   required: "El email es obligatorio",
+                  maxLength: { value: 100, message: "El email es demasiado largo" },
                   pattern: {
                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Ingresá un email válido",
+                    message: "Ingresá un email válido (ej: nombre@dominio.com)",
                   },
                 })}
               />
@@ -151,6 +157,11 @@ function ModalRegister({ show, onHide, onSwitchToLogin }) {
                   {...register("password", {
                     required: "La contraseña es obligatoria",
                     minLength: { value: 6, message: "Mínimo 6 caracteres" },
+                    maxLength: { value: 64, message: "Máximo 64 caracteres" },
+                    pattern: {
+                      value: /^(?=.*[A-Z])(?=.*\d).+$/,
+                      message: "Debe tener al menos una mayúscula y un número",
+                    },
                   })}
                 />
                 <button
