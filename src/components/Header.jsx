@@ -4,7 +4,8 @@ import { FaShoppingCart, FaHeart, FaBars, FaSearch, FaQuestionCircle, FaTimes, F
 import { Link } from "react-router-dom";
 import ModalLogin from "./auth/ModalLogin";
 import ModalRegister from "./auth/ModalRegister";
-import { getUsuario, clearSession, onAuthChange } from "../utils/auth";
+import { getUsuario, clearSession, onAuthChange, onOpenLoginModal } from "../utils/auth";
+import { getTotalFavoritos, onFavoritosChange } from "../utils/favoritos";
 
 function Header() {
   const [mostrarBusqueda, setMostrarBusqueda] = useState(false);
@@ -12,15 +13,18 @@ function Header() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [usuario, setUsuario] = useState(getUsuario);
+  const [cantidadFavoritos, setCantidadFavoritos] = useState(getTotalFavoritos);
 
   useEffect(() => {
-    return onAuthChange(() => setUsuario(getUsuario()));
+    const unsubAuth = onAuthChange(() => setUsuario(getUsuario()));
+    const unsubFav = onFavoritosChange(() => setCantidadFavoritos(getTotalFavoritos()));
+    const unsubLogin = onOpenLoginModal(() => setShowLogin(true));
+    return () => { unsubAuth(); unsubFav(); unsubLogin(); };
   }, []);
 
   const handleLogout = () => clearSession();
 
   const cantidadCarrito = 2;
-  const cantidadFavoritos = 3;
 
   const sugerencias = ["Vestido rojo", "Camisa blanca", "Pantalón negro"];
   const filtradas = sugerencias.filter((s) =>
@@ -100,14 +104,16 @@ function Header() {
             </InputGroup>
 
             <div className="d-flex gap-3 align-items-center">
-              <div style={{ position: "relative", cursor: "pointer" }}>
-                <FaHeart size={20} />
-                {cantidadFavoritos > 0 && (
-                  <Badge bg="danger" pill style={{ position: "absolute", top: -6, right: -8, fontSize: 9 }}>
-                    {cantidadFavoritos}
-                  </Badge>
-                )}
-              </div>
+              <Link to="/favoritos" style={{ color: "inherit" }}>
+                <div style={{ position: "relative", cursor: "pointer" }}>
+                  <FaHeart size={20} />
+                  {cantidadFavoritos > 0 && (
+                    <Badge bg="danger" pill style={{ position: "absolute", top: -6, right: -8, fontSize: 9 }}>
+                      {cantidadFavoritos}
+                    </Badge>
+                  )}
+                </div>
+              </Link>
               <div style={{ position: "relative", cursor: "pointer" }}>
                 <FaShoppingCart size={20} />
                 {cantidadCarrito > 0 && (
@@ -127,14 +133,16 @@ function Header() {
             </Nav>
 
             <Nav className="d-none d-lg-flex align-items-center gap-3">
-              <div style={{ position: "relative", cursor: "pointer" }}>
-                <FaHeart size={20} />
-                {cantidadFavoritos > 0 && (
-                  <Badge bg="danger" pill style={{ position: "absolute", top: -6, right: -10, fontSize: 10 }}>
-                    {cantidadFavoritos}
-                  </Badge>
-                )}
-              </div>
+              <Link to="/favoritos" style={{ color: "inherit" }}>
+                <div style={{ position: "relative", cursor: "pointer" }}>
+                  <FaHeart size={20} />
+                  {cantidadFavoritos > 0 && (
+                    <Badge bg="danger" pill style={{ position: "absolute", top: -6, right: -10, fontSize: 10 }}>
+                      {cantidadFavoritos}
+                    </Badge>
+                  )}
+                </div>
+              </Link>
 
               <div style={{ position: "relative", cursor: "pointer" }}>
                 <FaShoppingCart size={20} />
