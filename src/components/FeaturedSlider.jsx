@@ -2,11 +2,68 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { useState, useEffect } from "react";
 import { Container, Badge } from "react-bootstrap";
-import { FaChevronLeft, FaChevronRight, FaHeart } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaHeart, FaCheck } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import api from "../config/axios.js";
+import { esFavorito, toggleFavoritoAPI, onFavoritosChange } from "../utils/favoritos";
+import { getUsuario, openLoginModal } from "../utils/auth";
+import { agregarAlCarrito } from "../utils/carrito";
+import toast from "react-hot-toast";
 import "./FeaturedSlider.css";
+
+function SlideActions({ producto }) {
+  const [enFav, setEnFav]       = useState(() => esFavorito(producto._id));
+  const [agregando, setAgregando] = useState(false);
+  const [agregado, setAgregado]   = useState(false);
+
+  useEffect(() => {
+    return onFavoritosChange(() => setEnFav(esFavorito(producto._id)));
+  }, [producto._id]);
+
+  const handleToggleFav = async () => {
+    if (!getUsuario()) { openLoginModal(); return; }
+    try { await toggleFavoritoAPI(producto); }
+    catch (e) { console.error(e); }
+  };
+
+  const handleComprar = async () => {
+    if (!getUsuario()) { openLoginModal(); return; }
+    setAgregando(true);
+    try {
+      await agregarAlCarrito(producto._id);
+      setAgregado(true);
+      toast.success("Agregado al carrito");
+      setTimeout(() => setAgregado(false), 2000);
+    } catch (e) {
+      toast.error(e?.response?.data?.mensaje || "No se pudo agregar");
+    } finally {
+      setAgregando(false);
+    }
+  };
+
+  return (
+    <div className="featured-slider__actions">
+      <button
+        className={`featured-slider__buy-btn ${agregado ? "featured-slider__buy-btn--agregado" : ""}`}
+        onClick={handleComprar}
+        disabled={agregando || producto.stock === 0}
+      >
+        {producto.stock === 0
+          ? "Sin stock"
+          : agregado
+          ? <><FaCheck size={13} className="me-1" />Agregado</>
+          : agregando ? "..." : "Comprar"}
+      </button>
+      <button
+        className={`featured-slider__fav-btn ${enFav ? "featured-slider__fav-btn--active" : ""}`}
+        onClick={handleToggleFav}
+      >
+        <FaHeart size={16} />
+      </button>
+    </div>
+  );
+}
 
 function FeaturedSlider() {
   const [listaProductosDestacados, setListaProductosDestacados] = useState([]);
@@ -90,12 +147,7 @@ function FeaturedSlider() {
                       <span className="featured-slider__price">${producto.precio.toLocaleString()}</span>
                     </div>
 
-                    <div className="featured-slider__actions">
-                      <button className="featured-slider__buy-btn">Comprar</button>
-                      <button className="featured-slider__fav-btn">
-                        <FaHeart size={16} />
-                      </button>
-                    </div>
+                    <SlideActions producto={producto} />
                   </div>
                 </div>
               </div>
